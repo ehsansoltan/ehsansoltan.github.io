@@ -13,7 +13,7 @@ class fly{
     this.moveX = random(-1, 1);
     this.moveY = random(-1, 1);
     this.moveChange = 0;
-}
+  }
 
   move(){
     this.x+=random(-3, 3);
@@ -33,16 +33,27 @@ class fly{
 
 }
 
-class populator{
-    constructor(amount){
-    let flyList = [];
+class swarm{
+  constructor(){
+    this.flyList = [];
+    
+  }
 
-    for (let counter = 0; counter < amount; counter++){
-      flyList += counter;
+  getList(){
+    for (let counter = 0; counter < 10; counter++){
+      this.flyList.push(new fly());
     }
+  }
 
-
+  drawSwarm(){
+    for (let i = 0; i < this.flyList.length; i++){
+      this.flyList[i].move();
+      this.flyLIst[i].display();
     }
+  }
+
+
+    
 
 }
 
@@ -50,12 +61,18 @@ class populator{
 function setup() {
   createCanvas(windowWidth, windowHeight);
   fly1 = new fly();
+  swarm1 = new swarm();
+
+  swarm1.getList();
+
 }
 
 function draw() {
   background(220);
   fly1.move();
   fly1.display();
-
+  
+  swarm1.drawSwarm();
+ 
 
 }
