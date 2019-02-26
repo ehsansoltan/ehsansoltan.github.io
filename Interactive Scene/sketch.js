@@ -10,14 +10,25 @@ class fly{
   constructor(){
     this.x = random(windowWidth);
     this.y = random(windowHeight);
-    this.moveX = random(-1, 1);
-    this.moveY = random(-1, 1);
+    this.moveX = random(-5, 5);
+    this.moveY = random(-5, 5);
     this.moveChange = 0;
   }
 
   move(){
-    this.x+=random(-3, 3);
-    this.y+=random(-3, 3);
+    this.moveChange = random(1, 3);
+
+    if (this.moveChange == 2){
+      this.moveX = random(-5, 5);
+      this.moveY = random(-5, 5);
+    }
+   
+
+    this.x+=this.moveX;
+    this.y+=this.moveY;
+  
+    
+    
 
     if (this.x<0) this.x = 0;
     if (this.x>windowWidth) this.x = windowWidth;
@@ -26,8 +37,8 @@ class fly{
     if (this.y>windowHeight) this.y = windowHeight;
   }
 
-  display (){
-    fill (200);
+  display(){
+    fill (0);
     ellipse(this.x, this.y, 4, 4);
   }
 
@@ -58,21 +69,28 @@ class swarm{
 }
 
 
+let list = [];
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  fly1 = new fly();
-  swarm1 = new swarm();
-
-  swarm1.getList();
-
+  for (let flies = 0; flies <= 200; flies++){
+    list.push(new fly());
+  }
+ 
+ 
 }
+  
+  
 
 function draw() {
   background(220);
-  fly1.move();
-  fly1.display();
-  
-  swarm1.drawSwarm();
+
+  for (let i = 0; i < list.length; i++){
+    list[i].move();
+    list[i].display();
+  }
+
+
+ 
  
 
 }
