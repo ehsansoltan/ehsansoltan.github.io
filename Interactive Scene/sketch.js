@@ -16,17 +16,21 @@ class fly{
   }
 
   move(){
-    this.moveChange = random(1, 3);
+   
 
-    if (this.moveChange == 2){
-      this.moveX = random(-5, 5);
-      this.moveY = random(-5, 5);
-    }
+   
+    this.moveX = random(-5, 5);
+    this.moveY = random(-5, 5);
+    
    
 
     this.x+=this.moveX;
     this.y+=this.moveY;
-  
+
+    if (this.x > mouseX - 400 && this.x < mouseX && Math.abs(this.y - mouseY) < 50) this.x -= 5;
+    if (this.x < mouseX + 400 && this.x > mouseX && Math.abs(this.y - mouseY) < 50) this.x += 5;
+    if (this.y > mouseY - 400 && this.y < mouseY && Math.abs(this.x - mouseX) < 50) this.y -= 5;
+    if (this.y < mouseY + 400 && this.y > mouseY && Math.abs(this.x - mouseX) < 50) this.y += 5;
     
     
 
