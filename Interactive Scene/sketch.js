@@ -48,38 +48,23 @@ class fly{
 
 }
 
-class swarm{
-  constructor(){
-    this.flyList = [];
-    
+class swatter{
+
+  draw(){
+    fill (0);
+    rect(mouseX, mouseY, 30, 30);
   }
-
-  getList(){
-    for (let counter = 0; counter < 10; counter++){
-      this.flyList.push(new fly());
-    }
-  }
-
-  drawSwarm(){
-    for (let i = 0; i < this.flyList.length; i++){
-      this.flyList[i].move();
-      this.flyLIst[i].display();
-    }
-  }
-
-
-    
-
 }
 
 
 let list = [];
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  for (let flies = 0; flies <= 200; flies++){
+  for (let flies = 0; flies <= 500; flies++){
     list.push(new fly());
   }
- 
+  
+  swatter1 = new swatter();
  
 }
   
@@ -88,11 +73,14 @@ function setup() {
 function draw() {
   background(220);
 
+  swatter1.draw();
+
   for (let i = 0; i < list.length; i++){
     list[i].move();
     list[i].display();
   }
 
+  
 
  
  
