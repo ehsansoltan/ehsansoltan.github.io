@@ -8,10 +8,8 @@
 
 class character{
   constructor(){
-    this.x = 100;
-    this.y = 100;
-    this.destX;
-    this.destY;
+    this.location = createVector(100, 100);
+    this.dest = createVector(mouseX, mouseY);
     this.distanceX;
     this.distanceY;
 
@@ -27,17 +25,13 @@ class character{
   }
 
   draw(){
-    rect (this.x, this.y, 50, 50);
+    rect (this.location.x, this.location.y, 50, 50);
   }
 
   move(){
-    if (this.state === "moving"){
-      if (this.x < this.destX) this.x += this.mSpeed;
-      if (this.x > this.destX) this.x -= this.mSpeed;
-
-      if (this.y < this.destY) this.y += this.mSpeed;
-      if (this.y > this.destY) this.y -= this.mSpeed;
-    }
+    //if (this.state === "moving"){
+      
+    //}
     
     
   }
@@ -48,8 +42,7 @@ class character{
 
 function mousePressed(){
   char1.state = "moving";
-  char1.destX = mouseX;
-  char1.destY = mouseY;
+  char1.dest = (mouseX, mouseY);
 
   }
 
