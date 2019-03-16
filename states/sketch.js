@@ -31,7 +31,10 @@ class character{
   
   //function for drawing a certain portion from the spritesheet
   draw(){
-      image(this.spriteSheet, 0, 0, 118.5, 168, this.currentFrameX, this.currentFrameY, this.frameWidth, this.frameHeight);
+   
+      
+ 
+      image(this.spriteSheet, this.charX, 0, 118.5, 168, this.currentFrameX, this.currentFrameY, this.frameWidth, this.frameHeight);
   }
 
   //using 'millis()' to get the time and the time from the last animation frame switch
@@ -54,11 +57,6 @@ class character{
       this.currentFrameX = 0;
       this.currentFrameNum = 0;
     }
-    
-   
-      
-
-  
 
   }
 }
@@ -70,6 +68,7 @@ let char1 = new character();
 function setup() {
   createCanvas(windowWidth, windowHeight);
   char1.loadSpriteSheet();
+  
 }
 
 function draw() {
