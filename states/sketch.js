@@ -30,7 +30,7 @@ class character{
 
   //loading all the sprites i need from a single file
   loadSpriteSheet(){
-      this.spriteSheet = loadImage('assets/sprites.jpg');
+    this.spriteSheet = loadImage('assets/sprites.png');
   }
   
   //function for drawing a certain portion from the spritesheet
@@ -38,7 +38,7 @@ class character{
    
       
  
-      image(this.spriteSheet, this.charX, 0, 118.5, 168, this.currentFrameX, this.currentFrameY, this.frameWidth, this.frameHeight);
+    image(this.spriteSheet, this.charX, 0, 118.5, 168, this.currentFrameX, this.currentFrameY, this.frameWidth, this.frameHeight);
   }
 
   //using 'millis()' to get the time and the time from the last animation frame switch
@@ -50,17 +50,19 @@ class character{
   //changing animation frames every 55 milliseconds
   animate(){
     if (this.timeFromLast > 55){
-        this.currentFrameNum++;
-        this.currentFrameX += this.frameWidth;
-        this.timeFromLast = 0;
-        this.timeUntilLast = millis();
-      }
+      this.currentFrameNum++;
+      this.currentFrameX += this.frameWidth;
+      this.timeFromLast = 0;
+      this.timeUntilLast = millis();
+    }
     
     //resetting the stationary animation after the ninth frame
     
     if (this.currentFrameNum > this.maxFrame){ 
       this.currentFrameX = 0;
       this.currentFrameNum = 0;
+      this.timeFromLast = 0;
+      this.timeUntilLast = millis();
     }
   
 
@@ -68,12 +70,12 @@ class character{
 
   rightState(){
     this.state = "right";
-    this.currentFrameY = 436.
+    this.currentFrameY = 436;
     this.currentFrameX = 0;
     this.frameHeight = 114;
-    this.frameWidth = 130;
+    this.frameWidth = 94;
     this.maxFrame = 9;
-    }
+  }
 
 
   stationaryState(){
@@ -85,7 +87,7 @@ class character{
     this.maxFrame = 9;
   }
 
-  //movement
+ 
   move(){
     if (keyIsDown(RIGHT_ARROW)){
       
@@ -125,11 +127,12 @@ function setup() {
 }
 
 function draw() {
-  background(220);
+  background(255);
   char1.move();
-  char1.draw();
   char1.getTime();
   char1.animate();
+  char1.draw();
+ 
     
 
 
