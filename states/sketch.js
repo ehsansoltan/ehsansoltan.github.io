@@ -22,10 +22,38 @@ class character{
     this.timeUntilLast = 0;
     this.timeFromLast = 0;
 
+    this.willStop = false;
+
+    this.sizeX;
+    this.sizeY;
+
     this.maxFrame = 9;
 
     this.state = "stationary";
   }
+
+  rightState(){
+    this.state = "right";
+    this.currentFrameNum = 0;
+    this.currentFrameY = 436;
+    this.currentFrameX = 0;
+    this.frameHeight = 114;
+    this.frameWidth = 94;
+    this.maxFrame = 9;
+  }
+
+
+  stationaryState(){
+    this.state = "stationary";
+    this.currentFrameNum = 0;
+    this.willStop = false;
+    this.currentFrameX = 0;
+    this.currentFrameY = 0;
+    this.frameHeight = 112;
+    this.frameWidth = 79;
+    this.maxFrame = 9;
+  }
+
 
 
   //loading all the sprites i need from a single file
@@ -38,7 +66,7 @@ class character{
    
       
  
-    image(this.spriteSheet, this.charX, 0, 118.5, 168, this.currentFrameX, this.currentFrameY, this.frameWidth, this.frameHeight);
+    image(this.spriteSheet, this.charX, 0, this.frameWidth*1.5, this.frameHeight*1.5, this.currentFrameX, this.currentFrameY, this.frameWidth, this.frameHeight);
   }
 
   //using 'millis()' to get the time and the time from the last animation frame switch
@@ -56,46 +84,29 @@ class character{
       this.timeUntilLast = millis();
     }
     
-    //resetting the stationary animation after the ninth frame
-    
+    //resetting the animation after the ninth frame
     if (this.currentFrameNum > this.maxFrame){ 
       this.currentFrameX = 0;
       this.currentFrameNum = 0;
+
+      //changed to stationary if the user has let go of a movement key
+      if (this.willStop === true) this.stationaryState();
+
       this.timeFromLast = 0;
       this.timeUntilLast = millis();
+
     }
+
+    
   
 
   }
 
-  rightState(){
-    this.state = "right";
-    this.currentFrameY = 436;
-    this.currentFrameX = 0;
-    this.frameHeight = 114;
-    this.frameWidth = 94;
-    this.maxFrame = 9;
-  }
-
-
-  stationaryState(){
-    this.state = "stationary";
-    this.currentFrameX = 0;
-    this.currentFrameY = 0;
-    this.frameHeight = 112;
-    this.frameWidth = 79;
-    this.maxFrame = 9;
-  }
-
+  
  
   move(){
-    if (keyIsDown(RIGHT_ARROW)){
-      
-    }
-    else {
-     
-
-      }
+    if (this.state === "right") this.charX += 2;
+   
   }
 
 
@@ -107,14 +118,16 @@ class character{
 
 function keyPressed(){
   if (keyCode === RIGHT_ARROW){
-    char1.rightState();
+
+    if (char1.state === "stationary") char1.rightState();
 
   }
 }
 
 function keyReleased(){
   if (keyCode === RIGHT_ARROW){
-    char1.stationaryState();
+    char1.willStop = true;
+    
   }
 }
 
@@ -127,11 +140,12 @@ function setup() {
 }
 
 function draw() {
-  background(255);
+  background(64, 128, 0);
   char1.move();
   char1.getTime();
-  char1.animate();
+
   char1.draw();
+  char1.animate();
  
     
 
