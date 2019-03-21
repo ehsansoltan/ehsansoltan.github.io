@@ -21,11 +21,9 @@ class character{
     this.time = 0;
     this.timeUntilLast = 0;
     this.timeFromLast = 0;
+    this.animationTime = 55;
 
     this.willStop = false;
-
-    this.sizeX;
-    this.sizeY;
 
     this.maxFrame = 9;
 
@@ -33,7 +31,9 @@ class character{
   }
 
   rightState(){
+
     this.state = "right";
+    this.animationTime = 40;
     this.currentFrameNum = 0;
     this.currentFrameY = 436;
     this.currentFrameX = 0;
@@ -45,6 +45,7 @@ class character{
 
   stationaryState(){
     this.state = "stationary";
+    this.animationTime = 55;
     this.currentFrameNum = 0;
     this.willStop = false;
     this.currentFrameX = 0;
@@ -77,7 +78,7 @@ class character{
 
   //changing animation frames every 55 milliseconds
   animate(){
-    if (this.timeFromLast > 55){
+    if (this.timeFromLast > this.animationTime){
       this.currentFrameNum++;
       this.currentFrameX += this.frameWidth;
       this.timeFromLast = 0;
@@ -105,7 +106,7 @@ class character{
   
  
   move(){
-    if (this.state === "right") this.charX += 2;
+    if (this.state === "right") this.charX += 3;
    
   }
 
@@ -118,7 +119,7 @@ class character{
 
 function keyPressed(){
   if (keyCode === RIGHT_ARROW){
-
+    char1.willStop = false;
     if (char1.state === "stationary") char1.rightState();
 
   }
