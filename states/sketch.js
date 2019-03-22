@@ -12,6 +12,7 @@ class character{
 
     //defining some variables
     this.charX = 200;
+    this.charY = 200;
     this.frameHeight = 112;
     this.frameWidth = 79;
     this.currentFrameX = 0;
@@ -36,6 +37,17 @@ class character{
     this.animationTime = 40;
     this.currentFrameNum = 0;
     this.currentFrameY = 436;
+    this.currentFrameX = 0;
+    this.frameHeight = 114;
+    this.frameWidth = 94;
+    this.maxFrame = 9;
+  }
+
+  leftState(){
+    this.state = "left";
+    this.animationTime = 40;
+    this.currentFrameNum = 0;
+    this.currentFrameY = 553;
     this.currentFrameX = 0;
     this.frameHeight = 114;
     this.frameWidth = 94;
@@ -67,7 +79,7 @@ class character{
    
       
  
-    image(this.spriteSheet, this.charX, 0, this.frameWidth*1.5, this.frameHeight*1.5, this.currentFrameX, this.currentFrameY, this.frameWidth, this.frameHeight);
+    image(this.spriteSheet, this.charX, this.charY, this.frameWidth*1.5, this.frameHeight*1.5, this.currentFrameX, this.currentFrameY, this.frameWidth, this.frameHeight);
   }
 
   //using 'millis()' to get the time and the time from the last animation frame switch
@@ -106,7 +118,8 @@ class character{
   
  
   move(){
-    if (this.state === "right") this.charX += 3;
+    if (this.state === "right") this.charX += 4;
+    if (this.state === "left") this.charX -= 4;
    
   }
 
@@ -120,13 +133,24 @@ class character{
 function keyPressed(){
   if (keyCode === RIGHT_ARROW){
     char1.willStop = false;
-    if (char1.state === "stationary") char1.rightState();
+    if (char1.state !== "right") char1.rightState();
+
+  }
+
+  if (keyCode === LEFT_ARROW){
+    char1.willStop = false;
+    if (char1.state !== "left") char1.leftState();
 
   }
 }
 
 function keyReleased(){
   if (keyCode === RIGHT_ARROW){
+    char1.willStop = true;
+    
+  }
+
+  if (keyCode === LEFT_ARROW){
     char1.willStop = true;
     
   }
