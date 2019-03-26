@@ -101,7 +101,7 @@ class character{
 
     //declaring some variables for position, frames, time etc
     this.charX = 600;
-    this.charY = 750;
+    this.charY = 500;
     this.frameHeight = 112;
     this.frameWidth = 79;
     this.currentFrameX = 0;
@@ -229,6 +229,8 @@ class character{
   
   //moving the character based on its state
   move(){
+
+    this.charY = windowHeight - 200;
     if (this.state === "right") this.charX += 4;
     if (this.state === "left") this.charX -= 4;
    
@@ -307,7 +309,7 @@ function setup() {
 
 function draw() {
   background(64, 128, 0);
-  image(backgrounds, 0, -110);
+  image(backgrounds, 0, windowHeight - 1050);
   
   char1.move();
   char1.getTime();
