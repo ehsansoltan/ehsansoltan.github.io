@@ -100,8 +100,8 @@ class character{
   constructor(){
 
     //declaring some variables for position, frames, time etc
-    this.charX = 200;
-    this.charY = 200;
+    this.charX = 600;
+    this.charY = 750;
     this.frameHeight = 112;
     this.frameWidth = 79;
     this.currentFrameX = 0;
@@ -294,16 +294,21 @@ function preload() {
   char1.sound = loadSound("assets/hadouken.mp3");
 }
 
-
+let backgrounds;
 function setup() {
   createCanvas(windowWidth, windowHeight);
   char1.loadSpriteSheet();
   hadouken1.loadSpriteSheet();
   
+  //loading the background
+  backgrounds = loadImage ("assets/background.jpg");
+  
 }
 
 function draw() {
   background(64, 128, 0);
+  image(backgrounds, 0, -110);
+  
   char1.move();
   char1.getTime();
 
