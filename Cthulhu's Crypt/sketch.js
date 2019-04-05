@@ -31,11 +31,16 @@ function displayMap(map){
 }
 
 
-let gameMap;
+function preload(){
+  gameMap = loadJSON('assets/a.json');
+}
+
+
+let gameMap = {};
 let tileSize;
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  gameMap = "a.JSON";
+
   tileSize = 15;
 }
 
