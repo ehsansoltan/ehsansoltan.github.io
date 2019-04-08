@@ -14,18 +14,36 @@ class gameMap{
 
     this.emptyMap = [];
     this.tileSize = 15;
+    this.mapSize = 50;
+    this.coinChance;
   }
 
-  createMap(size){
-    for (let y = 0; y < size; y++){
+  makeCoin(chance, array){
+
+
+    for (let y = 0; y < this.mapSize; y++){
+      for (let x = 0; x < this.mapSize; x++){
+        this.coinChance = random(chance);
+        if (random(this.coinChance) === 1) array[y][x] = 4; //THE RANDOM CHANCE ISNT WORKING BUT IT ADDS C FINE BUT NOT WHEN RANDO!!111oneone
+       
+      }
+    
+    }
+  }
+
+  createMap(){
+    for (let y = 0; y < mapSize; y++){
       this.emptyMap.push([]);
-      for (let x = 0; x < size; x++){
+      for (let x = 0; x < mapSize; x++){
         this.emptyMap[y].push(0);
+       
       }
     
     }
     return (this.emptyMap);
   }
+
+ 
 
 
   displayMap(map){
@@ -36,6 +54,7 @@ class gameMap{
         if (map[y][x] === 1) text("#", x*this.tileSize, y*this.tileSize);
         if (map[y][x] === 0) text(".", x*this.tileSize, y*this.tileSize);
         if (map[y][x] === 3) text("@", x*this.tileSize, y*this.tileSize);
+        if (map[y][x] === 4) text("c", x*this.tileSize, y*this.tileSize);
       }
     }
   }
@@ -99,6 +118,7 @@ class character{
 
 function preload(){
   map1.gameMap = loadJSON('assets/test.json');
+  
 }
 
 
@@ -116,7 +136,7 @@ let map1 = new gameMap();
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  
+  map1.makeCoin(20, map1.gameMap);
 }
 
 function draw() {
