@@ -16,25 +16,28 @@ class gameMap{
     this.tileSize = 15;
     this.mapSize = 50;
     this.coinChance;
+    this.randX;
+    this.randY;
+    this.numberOfCoins = 100;
+   
   }
 
-  makeCoin(chance, array){
+  makeCoin(){
 
 
-    for (let y = 0; y < this.mapSize; y++){
-      for (let x = 0; x < this.mapSize; x++){
-        this.coinChance = random(chance);
-        if (random(this.coinChance) === 1) array[y][x] = 4; //THE RANDOM CHANCE ISNT WORKING BUT IT ADDS C FINE BUT NOT WHEN RANDO!!111oneone
-       
-      }
-    
+    for (let i = 0; i < this.numberOfCoins; i++){
+      this.randX = Math.floor(random(this.mapSize));
+      this.randY = Math.floor(random(this.mapSize));
+      if (this.gameMap[this.randY][this.randX] === 0) this.gameMap[this.randY][this.randX] = 4;
+      else i--;
     }
+      
   }
 
   createMap(){
-    for (let y = 0; y < mapSize; y++){
+    for (let y = 0; y < this.mapSize; y++){
       this.emptyMap.push([]);
-      for (let x = 0; x < mapSize; x++){
+      for (let x = 0; x < this.mapSize; x++){
         this.emptyMap[y].push(0);
        
       }
@@ -51,6 +54,7 @@ class gameMap{
     fill(255);
     for (let y = 0; y < 50; y++){
       for (let x = 0; x < 50; x++){
+        textFont('d');
         if (map[y][x] === 1) text("#", x*this.tileSize, y*this.tileSize);
         if (map[y][x] === 0) text(".", x*this.tileSize, y*this.tileSize);
         if (map[y][x] === 3) text("@", x*this.tileSize, y*this.tileSize);
@@ -68,6 +72,7 @@ class character{
     this.y = 48;
     this.avatar = "@";
     this.standingTile = 0;
+    this.coinsCollected = 0;
 
   }
 
@@ -77,7 +82,7 @@ class character{
   }
 
   up(map){
-    if (map[this.y-1][this.x] === 0){
+    if (map[this.y-1][this.x] === 0 || map[this.y-1][this.x] === 4){
       map[this.y][this.x] = this.standingTile;
       this.y--;
       this.standingTile = map[this.y][this.x];
@@ -86,7 +91,7 @@ class character{
   }
 
   down(map){
-    if (map[this.y+1][this.x] === 0){
+    if (map[this.y+1][this.x] === 0 || map[this.y+1][this.x] === 4){
       map[this.y][this.x] = this.standingTile;
       this.y++;
       this.standingTile = map[this.y][this.x];
@@ -95,7 +100,7 @@ class character{
   }
 
   left(map){
-    if (map[this.y][this.x-1] === 0){
+    if (map[this.y][this.x-1] === 0 || map[this.y][this.x-1] === 4){
       map[this.y][this.x] = this.standingTile;
       this.x--;
       this.standingTile = map[this.y][this.x];
@@ -104,7 +109,7 @@ class character{
   }
 
   right(map){
-    if (map[this.y][this.x+1] === 0){
+    if (map[this.y][this.x+1] === 0 || map[this.y][this.x+1] === 4){
       map[this.y][this.x] = this.standingTile;
       this.x++;
       this.standingTile = map[this.y][this.x];
@@ -112,10 +117,22 @@ class character{
    
   }
 
+  collectCoin(map){
+    if (this.standingTile === 4){
+      this.standingTile = 0;
+      map[this.y][this.x] = 0;
+      this.coinsCollected++;
+    }
+  }
+
+  drawStats(){
+    text("coins: " + this.coinsCollected, 800, 100);
+  }
 
 
 }
 
+let map1 = new gameMap();
 function preload(){
   map1.gameMap = loadJSON('assets/test.json');
   
@@ -132,16 +149,18 @@ function keyPressed(){
 
 
 let char1 = new character();
-let map1 = new gameMap();
+
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  map1.makeCoin(20, map1.gameMap);
+  map1.makeCoin();
 }
 
 function draw() {
   background(0);
   char1.draw(map1.gameMap);
   map1.displayMap(map1.gameMap);
+  char1.collectCoin(map1.gameMap);
+  char1.drawStats();
   
 }
