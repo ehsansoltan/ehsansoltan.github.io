@@ -19,6 +19,7 @@ class gameMap{
     this.randX;
     this.randY;
     this.numberOfCoins = 100;
+    this.ray;
    
   }
 
@@ -49,7 +50,7 @@ class gameMap{
  
 
 
-  displayMap(map){
+  displayMap(map){//display the entire map
     textSize(20);
     fill(255);
     for (let y = 0; y < 50; y++){
@@ -59,6 +60,25 @@ class gameMap{
         if (map[y][x] === 0) text(".", x*this.tileSize, y*this.tileSize);
         if (map[y][x] === 3) text("@", x*this.tileSize, y*this.tileSize);
         if (map[y][x] === 4) text("c", x*this.tileSize, y*this.tileSize);
+      }
+    }
+  }
+
+  displayFOV(map, pX, pY){//display only in player's field of vision
+
+    //this.ray = createVector(pX, pY);
+
+    textSize(20);
+    fill(255);
+    for (let y = 0; y < 50; y++){
+      for (let x = 0; x < 50; x++){
+        textFont('d');
+       
+          if (map[y][x] === 1) text("#", x*this.tileSize, y*this.tileSize);
+          if (map[y][x] === 0) text(".", x*this.tileSize, y*this.tileSize);
+          if (map[y][x] === 3) text("@", x*this.tileSize, y*this.tileSize);
+          if (map[y][x] === 4) text("c", x*this.tileSize, y*this.tileSize);
+        
       }
     }
   }
