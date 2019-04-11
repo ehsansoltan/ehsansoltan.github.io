@@ -20,6 +20,8 @@ class gameMap{
     this.randY;
     this.numberOfCoins = 100;
     this.ray;
+    this.slopeToCharacter;
+    this.blockVisible;
    
   }
 
@@ -29,8 +31,8 @@ class gameMap{
     for (let i = 0; i < this.numberOfCoins; i++){
       this.randX = Math.floor(random(this.mapSize));
       this.randY = Math.floor(random(this.mapSize));
-      if (this.gameMap[this.randY][this.randX] === 0) this.gameMap[this.randY][this.randX] = 4;
-      else i--;
+      if (this.gameMap[this.randY][this.randX] === 0) {this.gameMap[this.randY][this.randX] = 4;}
+      else {i--;}
     }
       
   }
@@ -44,7 +46,7 @@ class gameMap{
       }
     
     }
-    return (this.emptyMap);
+    return this.emptyMap;
   }
 
  
@@ -55,29 +57,44 @@ class gameMap{
     fill(255);
     for (let y = 0; y < 50; y++){
       for (let x = 0; x < 50; x++){
-        textFont('d');
-        if (map[y][x] === 1) text("#", x*this.tileSize, y*this.tileSize);
-        if (map[y][x] === 0) text(".", x*this.tileSize, y*this.tileSize);
-        if (map[y][x] === 3) text("@", x*this.tileSize, y*this.tileSize);
-        if (map[y][x] === 4) text("c", x*this.tileSize, y*this.tileSize);
+        textFont("d");
+        if (map[y][x] === 1) {text("#", x*this.tileSize, y*this.tileSize);}
+        if (map[y][x] === 0) {text(".", x*this.tileSize, y*this.tileSize);}
+        if (map[y][x] === 3) {text("@", x*this.tileSize, y*this.tileSize);}
+        if (map[y][x] === 4) {text("c", x*this.tileSize, y*this.tileSize);}
       }
     }
   }
 
   displayFOV(map, pX, pY){//display only in player's field of vision
 
-    //this.ray = createVector(pX, pY);
+    
 
     textSize(20);
     fill(255);
     for (let y = 0; y < 50; y++){
       for (let x = 0; x < 50; x++){
-        textFont('d');
-       
-          if (map[y][x] === 1) text("#", x*this.tileSize, y*this.tileSize);
-          if (map[y][x] === 0) text(".", x*this.tileSize, y*this.tileSize);
-          if (map[y][x] === 3) text("@", x*this.tileSize, y*this.tileSize);
-          if (map[y][x] === 4) text("c", x*this.tileSize, y*this.tileSize);
+
+        this.blockVisible = true;
+
+        this.slopeToCharacter = ((x - pY)/(y - pX));
+        for (let i = 0; i < Math.abs(pX-y); i++){
+          if (map[y-i][Math.floor((y-i)*this.slopeToCharacter)] === 1) this.blockVisible = false;
+
+        }
+
+        if (this.blockVisible === true){
+          textFont("d");
+          if (map[y][x] === 1) {text("#", x*this.tileSize, y*this.tileSize);}
+          if (map[y][x] === 0) {text(".", x*this.tileSize, y*this.tileSize);}
+          if (map[y][x] === 3) {text("@", x*this.tileSize, y*this.tileSize);}
+          if (map[y][x] === 4) {text("c", x*this.tileSize, y*this.tileSize);}
+        }
+        /*textFont("d");
+        if (map[y][x] === 1) {text("#", x*this.tileSize, y*this.tileSize);}
+        if (map[y][x] === 0) {text(".", x*this.tileSize, y*this.tileSize);}
+        if (map[y][x] === 3) {text("@", x*this.tileSize, y*this.tileSize);}
+        if (map[y][x] === 4) {text("c", x*this.tileSize, y*this.tileSize);}*/
         
       }
     }
@@ -154,16 +171,16 @@ class character{
 
 let map1 = new gameMap();
 function preload(){
-  map1.gameMap = loadJSON('assets/test.json');
+  map1.gameMap = loadJSON("assets/test.json");
   
 }
 
 
 function keyPressed(){
-  if (keyCode === UP_ARROW) char1.up(map1.gameMap);
-  if (keyCode === DOWN_ARROW) char1.down(map1.gameMap);
-  if (keyCode === LEFT_ARROW) char1.left(map1.gameMap);
-  if (keyCode === RIGHT_ARROW) char1.right(map1.gameMap); 
+  if (keyCode === UP_ARROW) {char1.up(map1.gameMap);}
+  if (keyCode === DOWN_ARROW) {char1.down(map1.gameMap);}
+  if (keyCode === LEFT_ARROW) {char1.left(map1.gameMap);}
+  if (keyCode === RIGHT_ARROW) {char1.right(map1.gameMap);} 
 }
 
 
