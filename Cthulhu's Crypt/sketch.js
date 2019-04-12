@@ -22,6 +22,9 @@ class gameMap{
     this.ray;
     this.slopeToCharacter;
     this.blockVisible;
+
+    this.blockToPlayerX;
+    this.blocktoPlayerY;
    
   }
 
@@ -76,12 +79,16 @@ class gameMap{
       for (let x = 0; x < 50; x++){
 
         this.blockVisible = true;
+        this.blockToPlayerX = Math.abs(y - pY);
+        this.blocktoPlayerY = Math.abs(x - pX);
 
-        this.slopeToCharacter = ((x - pY)/(y - pX));
-        for (let i = 0; i < Math.abs(pX-y); i++){
-          if (map[y-i][Math.floor((y-i)*this.slopeToCharacter)] === 1) this.blockVisible = false;
+        this.slopeToCharacter = this.blocktoPlayerY/this.blocktoPlayerY;
+        if (this.slopeToCharacter === 0) this.slopeToCharacter = 1;
+        for (let i = 0; i < this.blockToPlayerX; i++){
+          if (map[y + i][x + i*this.slopeToCharacter] === 1 && i !== 0) this.blockVisible = false;
 
         }
+        
 
         if (this.blockVisible === true){
           textFont("d");
@@ -196,7 +203,7 @@ function setup() {
 function draw() {
   background(0);
   char1.draw(map1.gameMap);
-  map1.displayMap(map1.gameMap);
+  map1.displayFOV(map1.gameMap, char1.x, char1.y);
   char1.collectCoin(map1.gameMap);
   char1.drawStats();
   
