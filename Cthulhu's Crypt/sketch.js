@@ -79,13 +79,13 @@ class gameMap{
       for (let x = 0; x < 50; x++){
 
         this.blockVisible = true;
-        this.blockToPlayerX = Math.abs(y - pY);
-        this.blocktoPlayerY = Math.abs(x - pX);
+        this.blockToPlayerX = x - pX;
+        this.blocktoPlayerY = y - pY;
 
-        this.slopeToCharacter = this.blocktoPlayerY/this.blocktoPlayerY;
+        this.slopeToCharacter = this.blocktoPlayerY/this.blocktoPlayerX;
         if (this.slopeToCharacter === 0) this.slopeToCharacter = 1;
         for (let i = 0; i < this.blockToPlayerX; i++){
-          if (map[y + i][x + i*this.slopeToCharacter] === 1 && i !== 0) this.blockVisible = false;
+          if (x + i <= 50 && x + i >= 0 && y + i*this.slopeToCharacter >= 0 && y + i*this.slopeToCharacter <= 50 && map[y + Math.floor(i*this.slopeToCharacter)][x + i] === 1) this.blockVisible = false;
 
         }
         
