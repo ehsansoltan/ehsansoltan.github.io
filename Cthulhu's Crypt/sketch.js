@@ -80,12 +80,12 @@ class gameMap{
 
         this.blockVisible = true;
         this.blockToPlayerX = x - pX;
-        this.blocktoPlayerY = y - pY;
+        this.blocktoPlayerY = pY - y;
 
         this.slopeToCharacter = this.blocktoPlayerY/this.blocktoPlayerX;
-        if (this.slopeToCharacter === 0) this.slopeToCharacter = 1;
+        
         for (let i = 0; i < this.blockToPlayerX; i++){
-          if (pX + i <= 50 && pX + i >= 0 && pY + i*this.slopeToCharacter >= 0 && pY + i*this.slopeToCharacter <= 50 && map[pY + Math.ceil(i*this.slopeToCharacter)][pX + i] === 1) this.blockVisible = false;
+          if (pX + i <= 50 && pX + i >= 0 && pY + i*this.slopeToCharacter >= 0 && pY - i*this.slopeToCharacter <= 50 && map[pY + Math.floor(i*this.slopeToCharacter)][pX + i] === 1) this.blockVisible = false;
 
         }
         
@@ -178,7 +178,7 @@ class character{
 
 let map1 = new gameMap();
 function preload(){
-  map1.gameMap = loadJSON("assets/test.json");
+  map1.gameMap = loadJSON("assets/test2.json");
   
 }
 
