@@ -84,11 +84,21 @@ class gameMap{
 
         this.slopeToCharacter = this.blocktoPlayerY/this.blocktoPlayerX;
         
-        for (let i = 0; i < this.blockToPlayerX; i++){
-          if (pX + i <= 50 && pX + i >= 0 && pY + i*this.slopeToCharacter >= 0 && pY - i*this.slopeToCharacter <= 50 && map[pY + Math.floor(i*this.slopeToCharacter)][pX + i] === 1) this.blockVisible = false;
+        if (Math.abs(this.blockToPlayerX) > 10 || Math.abs(this.blocktoPlayerY) > 10) this.blockVisible = false;
 
+       
+
+        for (let i = 0; i < this.blockToPlayerX; i ++){
+          if (map[y][pX + i] === 1) this.blockVisible = false;
+          
         }
-        
+
+        for (let i = 0; i < this.blockToPlayerY; i ++){
+          if (map[pY + i][x] === 1) this.blockVisible = false;
+          
+        }
+
+       
 
         if (this.blockVisible === true){
           textFont("d");
@@ -112,8 +122,8 @@ class gameMap{
 
 class character{
   constructor(){
-    this.x = 25;
-    this.y = 48;
+    this.x = 40;
+    this.y = 20;
     this.avatar = "@";
     this.standingTile = 0;
     this.coinsCollected = 0;
