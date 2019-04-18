@@ -86,6 +86,29 @@ class gameMap{
       }
     }
 
+    for (let i = pX; i > 0; i--){
+      if (map[pY][i] === 1){
+        this.wallLeft = i;
+        i = -1;
+      }
+    }
+
+
+    
+    for (let i = pY; i < 50; i++){
+      if (map[i][pX] === 1){
+        this.wallDown = i;
+        i = 51;
+      }
+    }
+/*
+    for (let i = pY; i > 0; i--){
+      if (map[i][pX] === 1){
+        this.wallUp = i;
+        i = -1;
+      }
+    }
+  */
   
 
 
@@ -108,7 +131,9 @@ class gameMap{
 
         
 
-        if (x > this.wallRight) this.blockVisible = false;
+        if (x > this.wallRight || x < this.wallLeft || y > this.wallDown) this.blockVisible = false;
+
+
        
 
         if (this.blockVisible === true){
@@ -199,7 +224,7 @@ class character{
 
 let map1 = new gameMap();
 function preload(){
-  map1.gameMap = loadJSON("assets/test2.json");
+  map1.gameMap = loadJSON("assets/test.json");
   
 }
 
