@@ -101,14 +101,14 @@ class gameMap{
         i = 51;
       }
     }
-/*
+
     for (let i = pY; i > 0; i--){
       if (map[i][pX] === 1){
         this.wallUp = i;
         i = -1;
       }
     }
-  */
+  
   
 
 
@@ -131,7 +131,7 @@ class gameMap{
 
         
 
-        if (x > this.wallRight || x < this.wallLeft || y > this.wallDown) this.blockVisible = false;
+        if (x > this.wallRight || x < this.wallLeft || y < this.wallUp || y > this.wallDown) this.blockVisible = false;
 
 
        
@@ -158,8 +158,8 @@ class gameMap{
 
 class character{
   constructor(){
-    this.x = 40;
-    this.y = 20;
+    this.x = 25;
+    this.y = 48;
     this.avatar = "@";
     this.standingTile = 0;
     this.coinsCollected = 0;
@@ -224,7 +224,7 @@ class character{
 
 let map1 = new gameMap();
 function preload(){
-  map1.gameMap = loadJSON("assets/test.json");
+  map1.gameMap = loadJSON("assets/maze.json");
   
 }
 
