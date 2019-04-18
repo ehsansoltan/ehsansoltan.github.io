@@ -25,6 +25,11 @@ class gameMap{
 
     this.blockToPlayerX;
     this.blocktoPlayerY;
+
+    this.wallLeft;
+    this.wallRight;
+    this.wallUp;
+    this.wallDown;
    
   }
 
@@ -69,9 +74,22 @@ class gameMap{
     }
   }
 
+
+
+  
   displayFOV(map, pX, pY){//display only in player's field of vision
 
-    
+    for (let i = pX; i < 50; i++){
+      if (map[pY][i] === 1){
+        this.wallRight = i;
+        i = 51;
+      }
+    }
+
+  
+
+
+
 
     textSize(20);
     fill(255);
@@ -88,16 +106,9 @@ class gameMap{
 
        
 
-        for (let i = 0; i < this.blockToPlayerX; i ++){
-          if (map[y][pX + i] === 1) this.blockVisible = false;
-          
-        }
+        
 
-        for (let i = 0; i < this.blockToPlayerY; i ++){
-          if (map[pY + i][x] === 1) this.blockVisible = false;
-          
-        }
-
+        if (x > this.wallRight) this.blockVisible = false;
        
 
         if (this.blockVisible === true){
