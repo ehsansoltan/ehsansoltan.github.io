@@ -13,7 +13,7 @@ class gameMap{
     this.gameMap = {};
 
     this.emptyMap = [];
-    this.tileSize = 15;
+    this.tileSize = 12;
     this.mapSize = 50;
     this.coinChance;
     this.randX;
@@ -22,6 +22,7 @@ class gameMap{
     this.ray;
     this.slopeToCharacter;
     this.blockVisible;
+    this.mapStartLeft = 50;
 
     this.blockToPlayerX;
     this.blocktoPlayerY;
@@ -123,7 +124,7 @@ class gameMap{
         this.blockToPlayerX = x - pX;
         this.blocktoPlayerY = pY - y;
 
-        this.slopeToCharacter = this.blocktoPlayerY/this.blocktoPlayerX;
+        
         
         if (Math.abs(this.blockToPlayerX) > 10 || Math.abs(this.blocktoPlayerY) > 10) this.blockVisible = false;
 
@@ -138,16 +139,12 @@ class gameMap{
 
         if (this.blockVisible === true){
           textFont("d");
-          if (map[y][x] === 1) {text("#", x*this.tileSize, y*this.tileSize);}
-          if (map[y][x] === 0) {text(".", x*this.tileSize, y*this.tileSize);}
-          if (map[y][x] === 3) {text("@", x*this.tileSize, y*this.tileSize);}
-          if (map[y][x] === 4) {text("c", x*this.tileSize, y*this.tileSize);}
+          if (map[y][x] === 1) {text("#", x*this.tileSize + this.mapStartLeft, y*this.tileSize);}
+          if (map[y][x] === 0) {text(".", x*this.tileSize + this.mapStartLeft, y*this.tileSize);}
+          if (map[y][x] === 3) {text("@", x*this.tileSize + this.mapStartLeft, y*this.tileSize);}
+          if (map[y][x] === 4) {text("c", x*this.tileSize + this.mapStartLeft, y*this.tileSize);}
         }
-        /*textFont("d");
-        if (map[y][x] === 1) {text("#", x*this.tileSize, y*this.tileSize);}
-        if (map[y][x] === 0) {text(".", x*this.tileSize, y*this.tileSize);}
-        if (map[y][x] === 3) {text("@", x*this.tileSize, y*this.tileSize);}
-        if (map[y][x] === 4) {text("c", x*this.tileSize, y*this.tileSize);}*/
+     
         
       }
     }
