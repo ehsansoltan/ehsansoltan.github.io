@@ -1,7 +1,9 @@
 // Cthulhu's Crypt (ASCII maze game)
 // Ehsan Soltan
 // April 28, 2019
-//
+/*Description: This is a game in which you navigate a maze (by moving with arrow keys) and try to collect as many coins and get back to the exit before your sanity runs out.
+it's a little "lackluster" because i spent a good deal of my time trying to write a realistic field of vision algorithm using trigonometry but i could't quite get it working in time (though i got close)
+(turn sound on by the way) */
 // Extra for Experts: n/a
 
 
