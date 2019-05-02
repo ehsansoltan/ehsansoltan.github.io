@@ -16,6 +16,9 @@ class map{
     this.currentRoomWidth;
     this.currentRoomHeight;
     this.maxRoomSize = 10;
+    this.roomAdded;
+    this.roomXSide;
+    this.roomYSide;
 
     this.corridorX;
     this.corridorY;
@@ -26,6 +29,7 @@ class map{
     this.corridorYChange = 0;
     this.maxCorridorLength = 25;
     this.minCorridorLength = 15;
+    
     
 
 
@@ -121,6 +125,22 @@ class map{
 
   }
 
+  addRoom(){
+    this.currentRoomHeight = Math.floor(random(this.maxRoomSize));
+    this.currentRoomWidth = Math.floor(random(this.maxRoomSize));
+    this.roomAdded = false;
+    
+    if (this.corridorX <= this.maxRoomSize/2) this.roomXSide = "left";
+    if (this.corridorX > this.maxRoomSize/2) this.roomXSide = "right";
+    if (this.corridorY <= this.maxRoomSize/2) this.roomYSide = "up";
+    if (this.corridorY > this.maxRoomSize/2) this.roomYSide = "down";
+
+    
+
+
+    
+  }
+
   //draws the map
   drawMap(size){
     textSize(this.textSize);
@@ -141,7 +161,7 @@ function setup() {
   map1 = new map();
   map1.createEmptyMap(map1.mapSize);
   map1.placeSeedRoom(25, 25);
-  map1.addCorridors(10);
+  map1.addCorridors(25);
 }
 
 function draw() {
