@@ -27,8 +27,9 @@ class map{
     this.roomEdge = false;
     this.corridorXChange = 0;
     this.corridorYChange = 0;
-    this.maxCorridorLength = 25;
+    this.maxCorridorLength = 20;
     this.minCorridorLength = 15;
+    this.timesRoomPlaceFailed = 0;
     
     
 
@@ -109,7 +110,7 @@ class map{
       //end corridor if it intersects an existing corridor
       if (this.map[this.corridorY][this.corridorX] === ".") this.corridorLength = 0;
       
-      this.map[this.corridorY][this.corridorX] = ".";
+      this.map[this.corridorY][this.corridorX] = "+";
       this.corridorY += this.corridorYChange;
       this.corridorX += this.corridorXChange;
       this.corridorLength--;
@@ -129,16 +130,58 @@ class map{
     this.currentRoomHeight = Math.floor(random(this.maxRoomSize));
     this.currentRoomWidth = Math.floor(random(this.maxRoomSize));
     this.roomAdded = false;
+
+    if (this.corridorY + this.currentRoomHeight < this.mapSize && this.corridorX + this.currentRoomWidth < this.mapSize){
+      for (let y = this.corridorY; y < this.corridorY + this.currentRoomHeight; y++){
+        for (let x = this.corridorX; x < this.corridorX + this.currentRoomWidth; x++){
+          this.map[y][x] = ".";
+  
+        }
+      }
+
+    }
+ 
     
-    if (this.corridorX <= this.maxRoomSize/2) this.roomXSide = "left";
-    if (this.corridorX > this.maxRoomSize/2) this.roomXSide = "right";
-    if (this.corridorY <= this.maxRoomSize/2) this.roomYSide = "up";
-    if (this.corridorY > this.maxRoomSize/2) this.roomYSide = "down";
+  }
+
+  noRoomPresent(){
+
+    if (this.corridorY + this.currentRoomHeight < this.mapSize && this.corridorX + this.currentRoomWidth < this.mapSize){
+
+      for (let y = this.corridorY; y < this.corridorY + this.currentRoomHeight; y++){
+        for (let x = this.corridorX; x < this.corridorX + this.currentRoomWidth; x++){
+          if (this.map[y][x] === ".") return false;
+        }
+      }
+    }
 
     
+    return true;
+
+  }
 
 
+  generateMap(iterations){
+    for (let i = 0; i < iterations; i++){
+
+      if (this.noRoomPresent() === true) {
+        
+        this.addRoom();
+        
+
+      }
+      else this.timesRoomPlaceFailed++;
+
+      if (this.timesRoomPlaceFailed > 2){
+        this.timesRoomPlaceFailed = 0;
+        this.addCorridors(1);
+      }
+
+      
+     
+    }
     
+
   }
 
   //draws the map
@@ -155,13 +198,15 @@ class map{
 
 
 
+
+
 let map1;
 function setup() {
   createCanvas(windowWidth, windowHeight);
   map1 = new map();
   map1.createEmptyMap(map1.mapSize);
   map1.placeSeedRoom(25, 25);
-  map1.addCorridors(25);
+  map1.generateMap(30);
 }
 
 function draw() {
