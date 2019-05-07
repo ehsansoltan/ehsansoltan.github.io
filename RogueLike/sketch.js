@@ -6,7 +6,7 @@
 // - describe what you did to take this project "above and beyond"
 
 
-class map{
+class Map{
   constructor(){
     this.map = [];
     this.mapSize = 50;
@@ -16,6 +16,7 @@ class map{
     this.currentRoomWidth;
     this.currentRoomHeight;
     this.maxRoomSize = 10;
+    this.minRoomSize = 4;
     this.roomAdded;
     this.roomXSide;
     this.roomYSide;
@@ -27,8 +28,8 @@ class map{
     this.roomEdge = false;
     this.corridorXChange = 0;
     this.corridorYChange = 0;
-    this.maxCorridorLength = 20;
-    this.minCorridorLength = 15;
+    this.maxCorridorLength = 10;
+    this.minCorridorLength = 4;
     this.timesRoomPlaceFailed = 0;
     
     
@@ -108,8 +109,13 @@ class map{
     while (this.corridorLength > 0 && this.corridorX + this.corridorXChange > 0 && this.corridorX + this.corridorXChange < this.mapSize && this.corridorY + this.corridorYChange > 0 && this.corridorY + this.corridorYChange < this.mapSize && this.corridorLength < this.maxCorridorLength){
 
       //end corridor if it intersects an existing corridor
-      if (this.map[this.corridorY][this.corridorX] === ".") this.corridorLength = 0;
-      
+      if (this.map[this.corridorY][this.corridorX] === "." || this.map[this.corridorY][this.corridorX] === "+") this.corridorLength = 0;
+
+      //end coridor if adjacent to a parallel corridor (to ensure corridors are merely one tile wide)
+      //if (this.corridorXChange === 0 && this.map[this.corridorY][this.corridorX + 1] === "+" || this.corridorXChange === 0 && this.map[this.corridorY][this.corridorX - 1]) this.corridorLength = 0;
+      //if (this.corridorYChange === 0 && this.map[this.corridorY + 1][this.corridorX] === "+" || this.corridorYChange === 0 && this.map[this.corridorY - 1][this.corridorX]) this.corridorLength = 0;
+
+
       this.map[this.corridorY][this.corridorX] = "+";
       this.corridorY += this.corridorYChange;
       this.corridorX += this.corridorXChange;
@@ -127,8 +133,8 @@ class map{
   }
 
   addRoom(){
-    this.currentRoomHeight = Math.floor(random(this.maxRoomSize));
-    this.currentRoomWidth = Math.floor(random(this.maxRoomSize));
+    this.currentRoomHeight = Math.floor(random(this.minRoomSize, this.maxRoomSize));
+    this.currentRoomWidth = Math.floor(random(this.minRoomSize, this.maxRoomSize));
     this.roomAdded = false;
 
     if (this.corridorY + this.currentRoomHeight < this.mapSize && this.corridorX + this.currentRoomWidth < this.mapSize){
@@ -170,12 +176,9 @@ class map{
         
 
       }
-      else this.timesRoomPlaceFailed++;
+      
 
-      if (this.timesRoomPlaceFailed > 2){
-        this.timesRoomPlaceFailed = 0;
-        this.addCorridors(1);
-      }
+      this.addCorridors(1);
 
       
      
@@ -203,10 +206,10 @@ class map{
 let map1;
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  map1 = new map();
+  map1 = new Map();
   map1.createEmptyMap(map1.mapSize);
   map1.placeSeedRoom(25, 25);
-  map1.generateMap(30);
+  map1.generateMap(25);
 }
 
 function draw() {
